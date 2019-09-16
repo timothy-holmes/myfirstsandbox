@@ -1,0 +1,70 @@
+<!-- following tutorial https://pythonise.com/feed/flask/flask-and-fetch-api -->
+
+{% extends "base.html" %}
+
+{% block app_content %}
+    {% if current_user.is_authenticated %}
+        <!-- SAND -->
+        {% for sand in sandbox %}
+        <div>
+            <h3>{{ sand.id }} - {{ sand.title}}</h3>
+            <p>{{ sand.message }}</p>
+        </div>
+        <!-- ADD SAND -->
+        <div class="mb-3">
+            <h3>Add Sand</h3>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Title Goes Here">
+            </div>
+
+            <div class="form-group">
+                <label>Message</label>
+                <textarea class="form-control" id="message" cols="30" rows="3" placeholder="Message Goes Here"></textarea>
+            </div>
+
+            <button class="btn btn-primary" id="submit" onclick="submit_message();">Submit message</button>
+        </div>
+            
+    {% else %}
+        <!-- NO SAND FOR YOU! -->
+        <h3><a href={{ url_for('login') }}>Login</a></h3>
+    {% endif %}
+{% endblock %}
+
+{% block script %}
+
+<script>
+    function submit_message() {
+
+        var title = document.getElementById("title");
+        var message = document.getElementById("message");
+
+        var entry = {
+            title: title.value,
+            message: message.value
+        };
+    
+        fetch(`${window.origin}/guestbook/create-entry`, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(entry),
+        cache: "no-cache",
+        headers: new Headers({
+          "content-type": "application/json"
+        })
+          })
+          .then(function(response) {
+            if (response.status !== 200) {
+              console.log(`Looks like there was a problem. Status code: ${response.status}`);
+              return;
+            }
+            response.json().then(function(data) {
+              console.log(data);
+            });
+          })
+          .catch(function(error) {
+            console.log("Fetch error: " + error);
+        });   
+    }   
+</script>
