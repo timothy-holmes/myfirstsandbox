@@ -15,7 +15,7 @@
 {% block styles -%}
     {{super()}}  {# do not forget to call super or Bootstrap's own stylesheets
                     will disappear! #}
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='sample-app.css')}}">
+    {# <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='sample-app.css')}}"> #}
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
 {% endblock %}
 
@@ -23,26 +23,14 @@
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ url_for('index') }}">Sandbox</a>
+                <a class="navbar-left"><img src="{{ url_for('static', filename='img/logo.jpg') }}" style="height: 50px; margin: 0 30px">  </a>
+                <a class="navbar-brand">Sandbox</a>
             </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    {% if current_user.is_anonymous %}
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                    {% else %}
-                    <li><a>{{- current_user.username }}</a></li>
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                    {% endif %}
-                </ul>
+            <div class="nav navbar-nav navbar-right form-group navbar-form">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sandModal">Add Sand</button>
             </div>
         </div>
-    </nav>    
+    </nav>  
 {% endblock %}
 
 {% block content %}
@@ -61,7 +49,4 @@
 
 {% block scripts %}
     {{ super() }}
-    {{ moment.include_moment() }}
-    <script>
-        $(function () {
-            $('.weight_popup').popover('toggle')
+{% endblock %}
