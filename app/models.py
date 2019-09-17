@@ -7,15 +7,15 @@ class Sand(db.Model):
     title = db.Column(db.String())
     message = db.Column(db.String(1024))
     timestamp = db.Column(db.DateTime, index=True)
-    #sand_id = db.Column(db.Integer, db.ForeignKey('sand.id'))
-    #replies = db.relationship('Sand', backref='ohpee', lazy='dynamic')
+    og_sand = db.Column(db.Integer, db.ForeignKey('sand.id'))
+    replies = db.relationship('Sand', backref=db.backref('sand', remote_side=[id]))
     
     def __init__(self,title,message,sand_id=None):
-        # id is automatic, sand_id is optional
+        # id is automatic
         self.timestamp = datetime.utcnow()
         self.title = title
         self.message = message
-        # self.sand_id = sand_id
-
+        
     def __repr__(self):
-        return '<Sand {}-{}>'.format(self.title,self.message)
+        return '<Sand {}-"{}">'.format(self.id,self.title)
+    
