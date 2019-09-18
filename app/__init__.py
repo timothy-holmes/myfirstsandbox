@@ -7,6 +7,7 @@ from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.config.from_object(Config)
+app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)

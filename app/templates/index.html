@@ -10,11 +10,11 @@
     {% endfor %}
     </div>
     <!-- ADD SAND -->
-    <div class="modal fade" id="sandModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="sandModal" tabindex="-1" role="dialog" aria-labelledby="sandModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h3 class="modal-title" id="exampleModalLabel">Add Sand</h3>
+            <h3 class="modal-title" id="sandModalLabel">Add Sand</h3>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -37,10 +37,38 @@
         </div>
       </div>
     </div>
+    <!-- ADD REPLY SAND -->
+    <div class="modal fade" id="sandReplyModal" tabindex="-1" role="dialog" aria-labelledby="sandReplyModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="sandReplyModalLabel">Add Sand</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+                <div class="form-group"><label>Reply to: Sand #</label><label id="reply_og_sand"></label></div>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control" id="reply_title" placeholder="Title Goes Here">
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea class="form-control" id="reply_message" cols="30" rows="3" placeholder="Message Goes Here"></textarea>
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="submit_reply();" data-dismiss="modal">Add Reply Sand</button>
+          </div>
+        </div>
+      </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}
     {{ super() }}
-    <script src="{{ url_for('static',filename='js/submit.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/submit.js') }}?version={{ js_version }}"></script>
 
 {% endblock %}

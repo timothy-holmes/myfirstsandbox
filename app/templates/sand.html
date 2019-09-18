@@ -1,13 +1,22 @@
-{% if reply %}<div style="padding: 0 10px 0 10px">{% endif %}
-    <div class="panel panel-default">
-        <div class="panel-heading">{{ sand.title}} (#{{ sand.id }})<a href="#" data-toggle="modal" data-target="#sandModal"><span class="glyphicon glyphicon-share-alt pull-right" aria-hidden="true"></span></a></div>
-        <div class="panel-body">{{ sand.message }}</div>
-        {% if sand.replies %}
-            {% set reply = True %}
-            {% for sand in sand.replies %}
-                {% include 'sand.html' %} {# accepts sand object #}
-            {% endfor %}
-            {% set reply = False %}
-        {% endif %}
+{% if sandbox_index.get(sand.id,False) %}
+    <div style="padding: 0 10px 0 10px">
+        <div class="panel panel-default" id="sand-{{ sand. id }}">
+            <div class="panel-heading">{{ sand.title}} (#{{ sand.id }})
+                <a href="#" data-toggle="modal" data-target="#sandReplyModal" onclick="specify_og({{ sand.id }});">
+                        <span class="glyphicon glyphicon-share-alt pull-right" aria-hidden="true"></span>
+                </a>
+            </div>
+            <div class="panel-body">{{ sand.message }}</div>
+            <div id="sand-{{ sand. id }}-reply">
+                {% if sand.replies %}
+                    {% set reply = True %}
+                        {% for sand in sand.replies %}
+                            {% include 'sand.html' %} {# accepts sand object #}
+                        {% endfor %}
+                    {% set reply = False %}
+                {% endif %}
+            </div>
+        </div>
     </div>
-{% if reply %}</div>{% endif %}
+    {% do sandbox_index.pop(sand.id) %}
+{% endif %}
